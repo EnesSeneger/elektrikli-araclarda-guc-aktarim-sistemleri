@@ -1,0 +1,10 @@
+# Streamlit ayarlari. Sunucu adresi burada sabitlenmez: Streamlit Community Cloud kendi
+# adresini kullanir; yerelde Baslat.bat arayuzu yalnizca bu bilgisayara (localhost) acar.
+[server]
+maxUploadSize = 20          # ogrenci CSV/XLSX yuklemesi icin ust sinir [MB]
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+primaryColor = "#2a78d6"

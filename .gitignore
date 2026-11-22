@@ -1,0 +1,30 @@
+# Python / ortam
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Uretilen ciktilar (python run_all.py yeniden uretir; klasorler .gitkeep ile tutulur)
+results/figures/*.png
+results/tables/*.csv
+
+# Masaustu exe (PyInstaller) ciktilari
+dist/
+build/
+*.spec
+ev_uygulama.py
+build_exe.ps1
+tools/
+
+# Kaynak arsivi, odev metni, rapor ve sunum: GitHub'da yok (telif / kisisel)
+docs/
+rapor/
+sunum/
+ödev_dersnotu/
+*.pdf
+*.pptx
+
+# Yerel arac ayarlari
+.claude/
+CLAUDE.md
+.streamlit/secrets.toml

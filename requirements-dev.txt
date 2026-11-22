@@ -1,0 +1,6 @@
+# Yalnizca gelistirme icin (bulutta gerekmez): testler, Sankey PNG, masaustu exe paketleme
+-r requirements.txt
+pytest>=8.0
+# Sankey PNG disa aktarimi (run_all.py); yerel Chrome/Edge kullanir, yoksa PNG atlanir
+kaleido==1.5.0
+pyinstaller>=6.0
