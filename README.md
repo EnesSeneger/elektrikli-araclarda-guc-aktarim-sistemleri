@@ -33,8 +33,6 @@ Uygulama kurulum gerektirmeden bir web linkinden açılır. GitHub'a yalnızca k
 3. **Streamlit Cloud'a bağla:** share.streamlit.io → GitHub ile giriş → *Create app* → depo `elektrikli-araclarda-guc-aktarim-sistemleri`, dal `main`, ana dosya `app.py` → *Advanced settings*'te Python **3.12** veya üstü → *Deploy*. Birkaç dakika sonra `https://<ad>.streamlit.app` linki hazır olur.
 4. Kod değişince: kodu **bu proje klasöründe** düzenle, 1. adımı tekrarla, GitHub Desktop'ta *Commit* + *Push origin*. Streamlit Cloud uygulamayı kendiliğinden günceller.
 
-**Arkadaşlar için:** "Kendi modelini test et" bölümünde kendi modelinin Temel Araç çıktısını (`t_s`, `p_bat_kw` sütunlu CSV/XLSX) yükleyip bu modelle %1 ölçütüyle karşılaştırabilirler; örnek dosya aynı yerden indirilir. Yüklenen dosya kaydedilmez.
-
 Bağımlılıklar: `requirements.txt` (uygulama, bulut bunu kurar) · `requirements-dev.txt` (pytest, kaleido, PyInstaller; yalnızca yerel geliştirme).
 
 ## Rapor

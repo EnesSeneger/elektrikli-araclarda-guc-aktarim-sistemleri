@@ -13,8 +13,10 @@ $files = "app.py", "app_texts.py", "run_all.py", "conftest.py", "Baslat.bat",
 $dirs  = "evmodel", "analysis", "tests", "data"
 
 New-Item -ItemType Directory -Force $out | Out-Null
-# Eski icerigi temizle ama .git'e dokunma (silinen dosyalar GitHub'da da silinmis gorunur)
-Get-ChildItem $out -Force | Where-Object { $_.Name -ne ".git" } | Remove-Item -Recurse -Force
+# Eski icerigi temizle ama .git (depo gecmisi) ve .devcontainer'a (Streamlit Cloud'un ekledigi)
+# dokunma; silinen dosyalar GitHub'da da silinmis gorunur
+$keep = ".git", ".devcontainer"
+Get-ChildItem $out -Force | Where-Object { $keep -notcontains $_.Name } | Remove-Item -Recurse -Force
 foreach ($f in $files) {
     $dst = Join-Path $out $f
     New-Item -ItemType Directory -Force (Split-Path $dst) | Out-Null

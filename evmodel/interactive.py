@@ -706,23 +706,3 @@ def fig_g_scan(curves: dict, g_ref: float, g_upper: float, g_sel: float,
     fig.update_yaxes(title_text=f"{cycle_name} tüketimi [Wh/km]")
     fig.update_layout(hovermode="x unified")
     return _base_layout(fig, f"3C · Haritalı model ile G taraması ({cycle_name})", PLOT_HEIGHT_PX + 40)
-
-
-# ---------------------------------------------------------------------------
-# Ogrenci modeli yukleme: P_bat(t) karsilastirmasi
-# ---------------------------------------------------------------------------
-def fig_upload_compare(info: dict, cycle_name: str) -> go.Figure:
-    """Referans (bu model, Temel Arac) ve yuklenen ogrenci P_bat(t) ust uste + fark."""
-    fig = make_subplots(rows=2, cols=1, shared_xaxes=True, row_heights=[0.7, 0.3],
-                        vertical_spacing=0.06)
-    fig.add_trace(go.Scatter(x=info["t_s"], y=info["p_ref_kw"], name="Referans model",
-                             line=dict(width=1.4)), row=1, col=1)
-    fig.add_trace(go.Scatter(x=info["t_s"], y=info["p_stu_kw"], name="Sizin modeliniz",
-                             line=dict(width=1.2, dash="dot")), row=1, col=1)
-    fig.add_trace(go.Scatter(x=info["t_s"], y=info["p_stu_kw"] - info["p_ref_kw"],
-                             name="Fark", line=dict(width=1)), row=2, col=1)
-    fig.update_yaxes(title_text="P_bat [kW]", row=1, col=1)
-    fig.update_yaxes(title_text="Fark [kW]", row=2, col=1)
-    fig.update_xaxes(title_text="Zaman [s]", row=2, col=1)
-    return _base_layout(fig, f"{cycle_name} · Temel Araç: batarya gücü karşılaştırması",
-                        PLOT_HEIGHT_PX)

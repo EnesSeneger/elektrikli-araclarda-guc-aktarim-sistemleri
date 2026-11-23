@@ -42,7 +42,6 @@ from analysis import p2_road_load as p2  # noqa: E402
 from evmodel.efficiency_map import eta_grid, load_eta_map  # noqa: E402
 from evmodel.envelope import t_max_nm  # noqa: E402
 from evmodel import interactive as ia  # noqa: E402
-from analysis import ogrenci_yukleme as ogr  # noqa: E402
 from evmodel.cycles import (CYCLE_NAMES, EXCEL_PATH, REFERENCE_DISTANCES_KM,  # noqa: E402
                             cycle_distance_km, load_all_cycles, load_phases)
 from evmodel.model import simulate  # noqa: E402
@@ -742,36 +741,6 @@ if page == "chk":
                          hide_index=True)
     st.caption(T.UI["chk_caption"])
 
-    # Kendi modelinin ciktisini yukle (baska ogrenciler icin)
-    st.subheader(T.UI["up_title"])
-    st.markdown(T.UI["up_intro"])
-    st.info(T.UI["up_steps"])
-    with st.expander(T.UI["up_howto_title"]):
-        st.markdown(T.UI["up_howto"])
-    u1, u2 = st.columns([1, 2])
-    up_cycle = u1.selectbox("Döngü", CYCLE_NAMES, index=CYCLE_NAMES.index("WLTC_3b"),
-                            key="up_cycle")
-    u1.download_button(T.UI["up_example"], ogr.example_csv(up_cycle),
-                       file_name=f"ornek_{up_cycle}_temel_arac.csv", mime="text/csv")
-    up_file = u2.file_uploader(T.UI["up_label"], type=["csv", "xlsx"], key="up_file")
-    if up_file is not None:
-        try:
-            t_u, p_u = ogr.parse_series(ogr.read_upload(up_file.name, up_file.getvalue()))
-            up_tab, up_info = ogr.compare(t_u, p_u, up_cycle)
-        except Exception as exc:  # okunamayan dosya: mesaj goster, uygulama durmasin
-            st.error(T.UI["up_error"].format(err=exc))
-        else:
-            if up_info["sure_uyumsuz"]:
-                st.warning(T.UI["up_cycle_mismatch"].format(t_up=up_info["t_up_s"],
-                                                            t_cyc=up_info["t_cycle_s"]))
-            n_bad_up = int((up_tab["durum"] == "tutmuyor").sum())
-            (st.success if n_bad_up == 0 else st.warning)(T.UI["up_result"].format(
-                n=len(up_tab), bad=n_bad_up, pts=up_info["n_points"], tot=up_info["n_cycle"],
-                dmax=up_info["max_abs_diff_kw"], tmax=up_info["t_max_diff_s"]))
-            st.dataframe(up_tab.style.format(precision=3).map(_color_status, subset=["durum"]),
-                         hide_index=True)
-            st.plotly_chart(ia.fig_upload_compare(up_info, up_cycle), config=PLOTLY_CONFIG,
-                            theme="streamlit")
 
 # 🎬 Surus simulatoru
 if page == "sim":
