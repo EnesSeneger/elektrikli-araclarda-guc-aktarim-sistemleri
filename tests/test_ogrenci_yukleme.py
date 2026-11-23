@@ -23,6 +23,12 @@ def test_semicolon_decimal_comma_watts():
     assert (tab["durum"] == "tutuyor").all(), tab
 
 
+def test_wrong_cycle_is_flagged():
+    t, p = ogr.parse_series(ogr.read_upload("ornek.csv", ogr.example_csv("WLTC_3b")))
+    assert not ogr.compare(t, p, "WLTC_3b")[1]["sure_uyumsuz"]
+    assert ogr.compare(t, p, "NEDC")[1]["sure_uyumsuz"]      # WLTC dosyasi, NEDC secili
+
+
 def test_wrong_model_fails():
     t, p = ogr.parse_series(ogr.read_upload("ornek.csv", ogr.example_csv("WLTC_3b")))
     tab, _ = ogr.compare(t, p * 1.05, "WLTC_3b")       # %5 hatali model

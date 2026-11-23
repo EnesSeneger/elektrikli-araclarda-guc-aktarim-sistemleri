@@ -745,6 +745,9 @@ if page == "chk":
     # Kendi modelinin ciktisini yukle (baska ogrenciler icin)
     st.subheader(T.UI["up_title"])
     st.markdown(T.UI["up_intro"])
+    st.info(T.UI["up_steps"])
+    with st.expander(T.UI["up_howto_title"]):
+        st.markdown(T.UI["up_howto"])
     u1, u2 = st.columns([1, 2])
     up_cycle = u1.selectbox("Döngü", CYCLE_NAMES, index=CYCLE_NAMES.index("WLTC_3b"),
                             key="up_cycle")
@@ -758,6 +761,9 @@ if page == "chk":
         except Exception as exc:  # okunamayan dosya: mesaj goster, uygulama durmasin
             st.error(T.UI["up_error"].format(err=exc))
         else:
+            if up_info["sure_uyumsuz"]:
+                st.warning(T.UI["up_cycle_mismatch"].format(t_up=up_info["t_up_s"],
+                                                            t_cyc=up_info["t_cycle_s"]))
             n_bad_up = int((up_tab["durum"] == "tutmuyor").sum())
             (st.success if n_bad_up == 0 else st.warning)(T.UI["up_result"].format(
                 n=len(up_tab), bad=n_bad_up, pts=up_info["n_points"], tot=up_info["n_cycle"],

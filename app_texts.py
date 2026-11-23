@@ -407,6 +407,47 @@ UI = {
                 "**p_bat_kw** (kW; W ise sütunu **p_bat_w** adlandırın). Dosya bu modelin aynı "
                 "döngüdeki sonucuyla karşılaştırılır; kabul ölçütü %1'dir. Biçim için örnek "
                 "dosyayı indirebilirsiniz. Yüklenen dosya hiçbir yere kaydedilmez.",
+    "up_steps": (
+        "**Nasıl kullanılır? (4 adım)**\n\n"
+        "1. Kendi modelinizi **Temel Araç** parametreleriyle çalıştırın (m = 1800 kg, "
+        "C_d = 0,28, A_f = 2,4 m², f_r = 0,011, η_t = 0,95, η_m = 0,92, η_reg = 0,80, "
+        "P_reg,max = 60 kW, P_aux = 400 W …). Kendi gerçek aracınızın parametreleriyle "
+        "karşılaştırma anlamlı olmaz.\n"
+        "2. Saniyelik batarya gücünü **iki sütunlu** bir dosyaya kaydedin:\n"
+        "    - `t_s`: zaman [s] → 0, 1, 2, …\n"
+        "    - `p_bat_kw`: batarya gücü [kW] → **çekişte artı, rejenerasyonda eksi** "
+        "(W ise sütun adı `p_bat_w`)\n"
+        "3. Aşağıdan dosyanızdaki **döngünün aynısını** seçin (ör. WLTC_3b) ve dosyayı yükleyin.\n"
+        "4. Sonuç tablosuna bakın: toplam enerji, tüketim, en büyük çekiş ve en büyük geri "
+        "kazanım %1 içindeyse **tutuyor** yazar. Tutmuyorsa alttaki grafikte farkın hangi "
+        "saniyede başladığına bakın; o saniyedeki hız ve ivmeyi kendi kodunuzda kontrol edin."
+    ),
+    "up_howto_title": "📄 Dosyayı nasıl hazırlarım? (Python · MATLAB · Excel örnekleri)",
+    "up_howto": (
+        "**Python** (kodunuzun sonuna ekleyin; `t` saniye, `P_bat` watt cinsinden diziler):\n"
+        "```python\n"
+        "import pandas as pd\n"
+        "pd.DataFrame({\"t_s\": t, \"p_bat_kw\": P_bat / 1000}).to_csv(\"benim_modelim.csv\", "
+        "index=False)\n"
+        "```\n"
+        "**MATLAB:**\n"
+        "```matlab\n"
+        "T = table(t(:), P_bat(:)/1000, 'VariableNames', {'t_s','p_bat_kw'});\n"
+        "writetable(T, 'benim_modelim.csv');\n"
+        "```\n"
+        "**Excel:** A1 hücresine `t_s`, B1 hücresine `p_bat_kw` yazın, değerleri altlarına "
+        "yapıştırın ve `.xlsx` olarak kaydedin. Ondalık virgül ve `;` ayırıcı sorun değildir.\n\n"
+        "**Sık yapılan hatalar**\n"
+        "- Uygulamada seçilen döngü dosyadaki döngüden farklı → her şey *tutmuyor* çıkar.\n"
+        "- Rejenerasyon artı işaretle yazılmış → *en büyük geri kazanım* satırı tutmaz.\n"
+        "- Güç W olduğu hâlde sütun adı `p_bat_kw` → değerler 1000 kat büyük çıkar.\n"
+        "- Zaman 1'den başlıyor ya da adım 1 s değil → karşılaştırılan nokta sayısı eksik kalır.\n\n"
+        "Emin değilseniz önce **⬇ Örnek dosya**'yı indirip açın; biçim tam olarak budur. "
+        "Örnek dosyayı olduğu gibi geri yüklerseniz dört satırın hepsi *tutuyor* çıkar."
+    ),
+    "up_cycle_mismatch": "Dosyanızın süresi ({t_up:.0f} s) seçili döngünün süresiyle ({t_cyc:.0f} s) "
+                         "uyuşmuyor. Döngü seçimini kontrol edin; dosyanız başka bir döngüye ait "
+                         "olabilir.",
     "up_example": "⬇ Örnek dosya (CSV)",
     "up_label": "CSV veya XLSX dosyası",
     "up_error": "Dosya okunamadı: {err}",

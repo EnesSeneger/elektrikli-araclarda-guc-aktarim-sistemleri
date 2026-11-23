@@ -93,7 +93,10 @@ def compare(t_s: np.ndarray, p_bat_w: np.ndarray, cycle_name: str) -> tuple[pd.D
     info = {"t_s": t_ref[common], "p_ref_kw": p_ref / 1e3, "p_stu_kw": p_stu / 1e3,
             "max_abs_diff_kw": float(np.max(np.abs(diff_kw))),
             "t_max_diff_s": float(t_ref[common][np.argmax(np.abs(diff_kw))]),
-            "n_points": int(common.sum()), "n_cycle": len(t_ref)}
+            "n_points": int(common.sum()), "n_cycle": len(t_ref),
+            # dosyanin suresi dongununkinden bir adimdan fazla farkliysa yanlis dongu secilmis olabilir
+            "t_up_s": float(t_s.max() - t_s.min()), "t_cycle_s": float(t_ref[-1] - t_ref[0]),
+            "sure_uyumsuz": bool(abs((t_s.max() - t_s.min()) - (t_ref[-1] - t_ref[0])) > dt_s)}
     return out, info
 
 
